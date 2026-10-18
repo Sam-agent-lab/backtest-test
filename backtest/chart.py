@@ -10,6 +10,7 @@ matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
 import pandas as pd
+from matplotlib.patches import Patch
 
 from .engine import BacktestResult
 
@@ -58,7 +59,10 @@ def plot_equity_curves(
     ax_top.set_ylabel("Equity (start = 100)")
     ax_top.set_title(title)
     ax_top.grid(True, alpha=0.3)
-    ax_top.legend(loc="upper left")
+    handles, labels = ax_top.get_legend_handles_labels()
+    handles.append(Patch(facecolor="green", alpha=0.10, edgecolor="none"))
+    labels.append("strategy in market (long)")
+    ax_top.legend(handles=handles, labels=labels, loc="best")
 
     ax_bottom.plot(price.index, price, color="#555555", lw=1.1)
     ax_bottom.set_yscale("log")
